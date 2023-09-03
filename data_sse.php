@@ -40,7 +40,7 @@ function sendUpdate($data) {
 $lastData = array();
 
 while (true) {
-    $sql = "SELECT id, value1, value2, value3, value4, reading_time FROM espdata ORDER BY reading_time DESC LIMIT 40";
+    $sql = "SELECT id, value1, value2, reading_time FROM espdata ORDER BY reading_time DESC LIMIT 40";
     $result = $conn->query($sql);
 
     $data = array();

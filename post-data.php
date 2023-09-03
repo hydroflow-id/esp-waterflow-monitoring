@@ -15,15 +15,14 @@ include "config.php";
 // Keep this API Key value to be compatible with the ESP32 code provided in the project page. If you change this value, the ESP32 sketch needs to match
 $api_key_value = "tPmAT5Ab3j7F9";
 
-$api_key = $value1 = $value2 = $value3 = $value4 = "";
+$api_key = $value1 = $value2 = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $api_key = test_input($_POST["api_key"]);
     if($api_key == $api_key_value) {
         $value1 = test_input($_POST["value1"]);
         $value2 = test_input($_POST["value2"]);
-        $value3 = test_input($_POST["value3"]);
-        $value4 = test_input($_POST["value4"]);
+
         // Create connection
         $conn = new mysqli($servername, $username, $password, $dbname);
         // Check connection
@@ -31,8 +30,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             die("Connection failed: " . $conn->connect_error);
         } 
         
-        $sql = "INSERT INTO espdata (value1, value2, value3, value4)
-        VALUES ('" . $value1 . "', '" . $value2 . "', '" . $value3 . "', '" . $value4 . "')";
+        $sql = "INSERT INTO espdata (value1, value2)
+        VALUES ('" . $value1 . "', '" . $value2 . "')";
         
         if ($conn->query($sql) === TRUE) {
             echo "New record created successfully";

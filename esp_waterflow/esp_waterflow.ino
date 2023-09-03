@@ -17,11 +17,11 @@
 #define YF_B1_PIN 19 // pin of water flow sensor in pin 19
 
 // Replace with your network credentials
-const char* ssid     = "ARNUR"; //your wifi ssid
-const char* password = "takonmama"; //your wifi password
+const char* ssid     = ""; //your wifi ssid
+const char* password = ""; //your wifi password
 
 // REPLACE with your Domain name and URL path or IP address with path
-const char* serverName = "http://192.168.0.15/esp-waterflow-monitoring/post-data.php";
+const char* serverName = "http://{your_server_IP address}/esp-waterflow-monitoring/post-data.php"; //example http://192.168.0.12/esp-waterflow-monitoring/post-data.php
 
 // Keep this API Key value to be compatible with the PHP code provided in the project page. 
 // If you change the apiKeyValue value, the PHP file /post-esp-data.php also needs to have the same key 
