@@ -6,7 +6,7 @@ var eventSource = new EventSource("../data_sse.php");
 eventSource.onmessage = function(event) {
   var data = JSON.parse(event.data);
 
-  // console.log(data);
+  console.log(data);
 
   // var value1 = data.map(item => item.value1);
   // var value2 = data.map(item => item.value2);
