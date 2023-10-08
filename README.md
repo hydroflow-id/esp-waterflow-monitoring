@@ -2,6 +2,9 @@
 Visualize waterflow usage from Anywhere in the World (ESP32 + MySQL + PHP) 
 in real time with **Server-Sent Events (SSE)**, which allows servers to send data in real time to clients via the HTTP protocol.
 
+# WIring Diagram
+[<img align="left" alt="smart water meter by hydroflow id" title="" width="200px" src="img/wiring.jpg" />] 
+
 # Installation
 Use ```git clone https://github.com/arifnurrizqi/esp-waterflow-monitoring.git``` or Download this repository in zip form
 
