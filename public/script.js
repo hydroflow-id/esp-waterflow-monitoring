@@ -6,7 +6,7 @@ var eventSource = new EventSource("../data_sse.php");
 eventSource.onmessage = function(event) {
   var data = JSON.parse(event.data);
 
-  // console.log(data);
+  console.log(data);
 
   // var value1 = data.map(item => item.value1);
   // var value2 = data.map(item => item.value2);
@@ -24,7 +24,33 @@ eventSource.onmessage = function(event) {
   chartF.series[0].setData(value1);
   chartF.xAxis[0].setCategories(reading_time);
   chartV.series[0].setData(value2);
-  chartV.xAxis[0].setCategories(reading_time); 
+  chartV.xAxis[0].setCategories(reading_time);
+
+    // Data JSON yang ingin ditampilkan
+    var jsonData = {data};
+
+    // Ambil elemen tbody dari tabel
+    var tableBody = document.getElementById("table-body");
+  
+    // Loop melalui data JSON dan tambahkan ke tabel
+    jsonData.data.forEach(function(item) {
+      var row = document.createElement("tr");
+
+      var readingTimeCell = document.createElement("td");
+      readingTimeCell.textContent = item.reading_time;
+  
+      var debitCell = document.createElement("td");
+      debitCell.textContent = item.value1;
+  
+      var volumeCell = document.createElement("td");
+      volumeCell.textContent = item.value2;
+
+      row.appendChild(readingTimeCell);
+      row.appendChild(debitCell);
+      row.appendChild(volumeCell);
+      
+      tableBody.appendChild(row);
+    });
 };
 
 document.addEventListener("DOMContentLoaded", function () {

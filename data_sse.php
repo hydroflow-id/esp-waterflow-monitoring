@@ -39,18 +39,47 @@ function sendUpdate($data) {
 
 $lastData = array();
 
-while (true) {
-    $sql = "SELECT id, value1, value2, reading_time FROM espdata ORDER BY reading_time DESC LIMIT 40";
-    $result = $conn->query($sql);
+function debit(){
+    global $conn;
+    $query = "SELECT value1 FROM espdata ORDER BY reading_time DESC LIMIT 1";
+    return $conn->query($query);
+}
+function usage(){
+    global $conn;
+    $query = "SELECT value2 FROM espdata ORDER BY reading_time DESC LIMIT 1";
+    return $conn->query($query);
+}
+function data(){
+    global $conn;
+    $query = "SELECT id, value1, value2, reading_time FROM espdata ORDER BY reading_time DESC LIMIT 40";
+    return $conn->query($query);
+}
 
-    $data = array();
-    while ($row = $result->fetch_assoc()) {
-        $data[] = $row;
+while (true) {
+    // Memanggil fungsi debit()
+    $debitResult = debit();
+    $debitValue = $debitResult->fetch_assoc();
+
+    // Memanggil fungsi usage()
+    $usageResult = usage();
+    $usageValue = $usageResult->fetch_assoc();
+
+    // Memanggil fungsi data()
+    $dataResult = data();
+    $dataArray = array(); // Array untuk menyimpan data
+
+    // Memasukkan hasil debit dan usage ke dalam array
+    $dataArray['debit'] = $debitValue;
+    $dataArray['usage'] = $usageValue;
+
+    // Memasukkan hasil data ke dalam array
+    while ($row = $dataResult->fetch_assoc()) {
+        $dataArray['data'][] = $row;
     }
 
-    if ($data !== $lastData) {
-        sendUpdate($data);
-        $lastData = $data;
+    if ($dataArray !== $lastData) {
+        sendUpdate($dataArray);
+        $lastData = $dataArray;
     }
 
     // Berikan waktu singkat untuk CPU beristirahat sebelum melakukan loop kembali

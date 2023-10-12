@@ -7,24 +7,68 @@
   <script src="https://code.highcharts.com/highcharts.js"></script>
   <script src="https://code.highcharts.com/modules/data.js"></script>
   <style>
-  body {
-    min-width: 310px;
-    max-width: 1280px;
-    height: 500px;
-    margin: 0 auto;
-  }
-  h2 {
-    font-family: Arial;
-    font-size: 2.5rem;
-    text-align: center;
-  }
+    body {
+      min-width: 310px;
+      max-width: 1280px;
+      height: 500px;
+      margin: 0 auto;
+      font-family: Arial;
+    }
+    h2 {
+      font-size: 2.5rem;
+      text-align: center;
+    }
+    .table-responsive {
+      overflow-x: auto;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+    th, td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    }
+    th {
+      background-color: #44baff;
+      color: white;
+    }
+    tr:nth-child(even) {background-color: #f8f8f8;}
+    tr:hover {background-color: powderblue;}
   </style>
 </head>
 <body>
   <h2>Water Usage Monitoring</h2>
-    <div id="chart-flowrate" class="container"></div>
-    <div id="chart-volume" class="container"></div>
-    
+  <div class="row">
+    <div class="col">
+      <span>Debit Aliran</span>
+      <br>
+      <span id="debit">35 Liter/menit</span>
+    </div>
+    <div class="col">
+      <span>Total Volume</span>
+      <br>
+      <span id="volume">350 Liter</span>
+    </div>
+  </div>
+  <div id="chart-flowrate" class="container"></div>
+  <div id="chart-volume" class="container"></div>
+  <div class="table-responsive">
+    <table>
+      <thead>
+        <tr>
+          <th>Reading Time</th>
+          <th>Debit</th>
+          <th>Volume</th>
+        </tr>
+      </thead>
+      <tbody id="table-body">
+      </tbody>
+    </table>
+  </div>
+  
+
     <script src="script.js"></script>
 </body>
 </html>
