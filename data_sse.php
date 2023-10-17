@@ -39,7 +39,7 @@ function sendUpdate($data) {
 
 $lastData = array();
 
-function debit(){
+function rate(){
     global $conn;
     $query = "SELECT value1 FROM espdata ORDER BY reading_time DESC LIMIT 1";
     return $conn->query($query);
@@ -57,8 +57,8 @@ function data(){
 
 while (true) {
     // Memanggil fungsi debit()
-    $debitResult = debit();
-    $debitValue = $debitResult->fetch_assoc();
+    $rateResult = rate();
+    $rateValue = $rateResult->fetch_assoc();
 
     // Memanggil fungsi usage()
     $usageResult = usage();
@@ -68,8 +68,8 @@ while (true) {
     $dataResult = data();
     $dataArray = array(); // Array untuk menyimpan data
 
-    // Memasukkan hasil debit dan usage ke dalam array
-    $dataArray['debit'] = $debitValue;
+    // Memasukkan hasil rate dan usage ke dalam array
+    $dataArray['rate'] = $rateValue;
     $dataArray['usage'] = $usageValue;
 
     // Memasukkan hasil data ke dalam array

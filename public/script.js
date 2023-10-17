@@ -4,21 +4,22 @@ var chartV;
 var eventSource = new EventSource("../data_sse.php");
 
 eventSource.onmessage = function(event) {
-  var data = JSON.parse(event.data);
+  var allData = JSON.parse(event.data);
 
-  console.log(data);
+  // console.log(allData);
 
-  // var value1 = data.map(item => item.value1);
-  // var value2 = data.map(item => item.value2);
-  // var reading_time = data.map(item => item.reading_time);
-
+  var rate = parseFloat(allData.rate.value1);
+  var usage = parseFloat(allData.usage.value2);
+  var data = allData.data;
   var value1 = data.map(item => parseFloat(item.value1));
   var value2 = data.map(item => parseFloat(item.value2));
   var reading_time = data.map(item => item.reading_time);
   
+  // console.log(debit);
+  // console.log(usage);
   // console.log(value1);
   // console.log(value2);
-  // console.log(reading_time);
+  // console.log(data);
 
   // Update charts here
   chartF.series[0].setData(value1);
@@ -26,38 +27,52 @@ eventSource.onmessage = function(event) {
   chartV.series[0].setData(value2);
   chartV.xAxis[0].setCategories(reading_time);
 
-    // Data JSON yang ingin ditampilkan
-    var jsonData = {data};
+  // Data JSON yang ingin ditampilkan
+  var jsonData = {data};
 
-    // Ambil elemen tbody dari tabel
-    var tableBody = document.getElementById("table-body");
-  
-    // Loop melalui data JSON dan tambahkan ke tabel
-    jsonData.data.forEach(function(item) {
-      var row = document.createElement("tr");
+  // Ambil elemen dari html
+  var tableBody = document.getElementById("table-body");
+  var debit = document.getElementById("debit");
+  var volume = document.getElementById("volume");
 
-      var readingTimeCell = document.createElement("td");
-      readingTimeCell.textContent = item.reading_time;
+  //replace nilai debit dan volume
+  debit.innerHTML = rate;
+  volume.innerHTML = usage;
   
-      var debitCell = document.createElement("td");
-      debitCell.textContent = item.value1;
+  jsonData.data.forEach(function(item) {
+    var row = document.createElement("tr");
+    // Menambahkan class untuk tr
+    row.classList.add("bg-white", "border-b", "hover:bg-gray-50");
   
-      var volumeCell = document.createElement("td");
-      volumeCell.textContent = item.value2;
-
-      row.appendChild(readingTimeCell);
-      row.appendChild(debitCell);
-      row.appendChild(volumeCell);
-      
-      tableBody.appendChild(row);
-    });
+    var readingTimeCell = document.createElement("td");
+    readingTimeCell.textContent = item.reading_time;
+    // Menambahkan class untuk td
+    readingTimeCell.classList.add("px-6", "py-4", "font-medium", "text-gray-900", "whitespace-nowrap");
+  
+    var debitCell = document.createElement("td");
+    debitCell.textContent = item.value1;
+    // Menambahkan class untuk td
+    debitCell.classList.add("px-6", "py-4", "font-medium", "text-gray-900", "whitespace-nowrap");
+  
+    var volumeCell = document.createElement("td");
+    volumeCell.textContent = item.value2;
+    // Menambahkan class untuk td
+    volumeCell.classList.add("px-6", "py-4", "font-medium", "text-gray-900", "whitespace-nowrap");
+  
+    row.appendChild(readingTimeCell);
+    row.appendChild(debitCell);
+    row.appendChild(volumeCell);
+  
+    tableBody.appendChild(row);
+  });
+  
 };
 
 document.addEventListener("DOMContentLoaded", function () {
   chartF = new Highcharts.Chart({
     chart: { renderTo: "chart-flowrate" },
     title: { text: "Water Flowrate" },
-    series: [{ data: [] }],
+    series: [{ showInLegend: false, data: [] }],
     plotOptions: {
       line: { 
         dataLabels: { enabled: true }
@@ -66,12 +81,13 @@ document.addEventListener("DOMContentLoaded", function () {
     },
     xAxis: { type: "datetime", categories: [], reversed: true },
     yAxis: { title: { text: "Liter/Menit" } },
+    credits: { enabled: false }
   });
 
   chartV = new Highcharts.Chart({
     chart: { renderTo: "chart-volume" },
-    title: { text: "Pemakaian" },
-    series: [{ data: [] }],
+    title: { text: "Water Usage" },
+    series: [{ showInLegend: false, data: [] }],
     plotOptions: {
       line: { 
         dataLabels: { enabled: true }
@@ -80,5 +96,6 @@ document.addEventListener("DOMContentLoaded", function () {
     },
     xAxis: { type: "datetime", categories: [], reversed: true },
     yAxis: { title: { text: "Liter" } },
+    credits: { enabled: false }
   });
 });
