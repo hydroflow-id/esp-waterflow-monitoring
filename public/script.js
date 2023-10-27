@@ -38,6 +38,10 @@ eventSource.onmessage = function(event) {
   //replace nilai debit dan volume
   debit.innerHTML = rate;
   volume.innerHTML = usage;
+
+  while (tableBody.firstChild) { // Kosongkan tabel sebelum menambahkan data baru
+    tableBody.removeChild(tableBody.firstChild);
+  }
   
   jsonData.data.forEach(function(item) {
     var row = document.createElement("tr");
